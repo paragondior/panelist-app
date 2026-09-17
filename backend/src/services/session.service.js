@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Panelist = require("../models/Panelist");
 const Session = require("../models/Session");
 const ApiError = require("../utils/ApiError");
+const { emitSpeakerUpdated } = require("../sockets/session.events");
 
 const sessionFields = [
   "eventName",
@@ -183,6 +184,9 @@ const selectCurrentSpeaker = async (sessionId, panelistId) =>
     await session.save({ session: dbSession });
 
     return getSessionSnapshot(sessionId, dbSession);
+  }).then((snapshot) => {
+    emitSpeakerUpdated(snapshot, "current-speaker-selected");
+    return snapshot;
   });
 
 const startSpeaker = async (sessionId, panelistId) =>
@@ -209,6 +213,9 @@ const startSpeaker = async (sessionId, panelistId) =>
     await session.save({ session: dbSession });
 
     return getSessionSnapshot(sessionId, dbSession);
+  }).then((snapshot) => {
+    emitSpeakerUpdated(snapshot, "speaker-started");
+    return snapshot;
   });
 
 const endSpeaker = async (sessionId) =>
@@ -233,6 +240,9 @@ const endSpeaker = async (sessionId) =>
     await session.save({ session: dbSession });
 
     return getSessionSnapshot(sessionId, dbSession);
+  }).then((snapshot) => {
+    emitSpeakerUpdated(snapshot, "speaker-ended");
+    return snapshot;
   });
 
 const resetSession = async (sessionId) =>
@@ -254,6 +264,9 @@ const resetSession = async (sessionId) =>
     await session.save({ session: dbSession });
 
     return getSessionSnapshot(sessionId, dbSession);
+  }).then((snapshot) => {
+    emitSpeakerUpdated(snapshot, "session-reset");
+    return snapshot;
   });
 
 module.exports = {

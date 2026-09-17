@@ -1,17 +1,11 @@
 const http = require("http");
-const { Server } = require("socket.io");
 const app = require("./app");
 const connectDatabase = require("./config/database");
 const env = require("./config/env");
+const initializeSocket = require("./sockets/socket");
 
 const httpServer = http.createServer(app);
-
-// Socket.io is attached now so later phases can add authenticated session rooms and events.
-const io = new Server(httpServer, {
-  cors: {
-    origin: env.frontendUrl,
-  },
-});
+const io = initializeSocket(httpServer, env.frontendUrl);
 
 const startServer = async () => {
   try {

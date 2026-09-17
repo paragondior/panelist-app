@@ -1,17 +1,38 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+const http = require("http");
+const { Server } = require("socket.io");
+const app = require("./app");
+const connectDatabase = require("./config/database");
+const env = require("./config/env");
 
-const PORT = process.env.PORT || 5000;
+const httpServer = http.createServer(app);
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("✅ MongoDB connected successfully");
+// Socket.io is attached now so later phases can add authenticated session rooms and events.
+const io = new Server(httpServer, {
+  cors: {
+    origin: env.frontendUrl,
+  },
+});
 
-    // Only start the server after MongoDB connects
-    console.log(` Backend ready on port ${PORT}`);
-  })
-  .catch((error) => {
-    console.error(" MongoDB connection failed:");
-    console.error(error.message);
-  });
+const startServer = async () => {
+  try {
+    await connectDatabase(env.mongodbUri);
+
+    httpServer.listen(env.port, () => {
+      console.log(`Backend listening on port ${env.port}`);
+    });
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
+
+const shutdown = async (signal) => {
+  console.log(`${signal} received. Shutting down gracefully`);
+  io.close();
+  httpServer.close();
+};
+
+process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));

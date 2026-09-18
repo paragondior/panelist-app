@@ -4,6 +4,7 @@ const env = require("./config/env");
 const { errorHandler, notFoundHandler } = require("./middleware/error.middleware");
 const authRoutes = require("./routes/auth.routes");
 const panelistRoutes = require("./routes/panelist.routes");
+const publicSessionRoutes = require("./routes/public-session.routes");
 const sessionRoutes = require("./routes/session.routes");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/panelists", panelistRoutes);
+app.use("/api/public/sessions", publicSessionRoutes);
 app.use("/api/sessions", sessionRoutes);
 
 app.get("/api/health", (req, res) => {

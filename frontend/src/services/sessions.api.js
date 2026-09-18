@@ -6,7 +6,7 @@ export const getSessions = async (params = {}) => {
 }
 
 export const getSession = async (sessionId) => {
-  const response = await api.get(`/sessions/${sessionId}`)
+  const response = await api.get(`/public/sessions/${sessionId}/dashboard`)
   return response.data.data
 }
 

@@ -17,6 +17,11 @@ const getSession = async (req, res) => {
   res.status(200).json({ success: true, data });
 };
 
+const getPublicSessionDashboard = async (req, res) => {
+  const data = await sessionService.getPublicSessionDashboard(req.params.id);
+  res.status(200).json({ success: true, data });
+};
+
 const createSession = async (req, res) => {
   requireBody(req.body);
   const session = await sessionService.createSession(req.body, req.auth.userId);
@@ -67,6 +72,7 @@ module.exports = {
   deleteSession,
   endSpeaker,
   getSession,
+  getPublicSessionDashboard,
   listSessions,
   resetSession,
   selectCurrentSpeaker,

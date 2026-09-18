@@ -5,13 +5,22 @@ const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000'
 
 export const useSocket = ({ sessionId, onSpeakerUpdated } = {}) => {
   const socketRef = useRef(null)
+  const speakerUpdatedRef = useRef(onSpeakerUpdated)
 
   useEffect(() => {
+    speakerUpdatedRef.current = onSpeakerUpdated
+  }, [onSpeakerUpdated])
+
+  useEffect(() => {
+    if (!sessionId) {
+      return undefined
+    }
+
     const socket = io(socketUrl, { autoConnect: true })
     socketRef.current = socket
 
     const handleSpeakerUpdated = (payload) => {
-      onSpeakerUpdated?.(payload)
+      speakerUpdatedRef.current?.(payload)
     }
 
     socket.on('session:speaker-updated', handleSpeakerUpdated)
@@ -21,7 +30,7 @@ export const useSocket = ({ sessionId, onSpeakerUpdated } = {}) => {
       socket.disconnect()
       socketRef.current = null
     }
-  }, [onSpeakerUpdated])
+  }, [sessionId])
 
   useEffect(() => {
     const socket = socketRef.current

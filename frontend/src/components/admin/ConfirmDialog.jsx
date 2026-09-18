@@ -1,0 +1,5 @@
+function ConfirmDialog({ title, message, onConfirm, onCancel, isLoading }) {
+  return <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-950/40 p-5" role="presentation"><div aria-modal="true" className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl" role="dialog" aria-labelledby="confirm-title"><h2 className="text-xl font-semibold text-slate-950" id="confirm-title">{title}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{message}</p><div className="mt-6 flex justify-end gap-3"><button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold" onClick={onCancel} type="button">Cancel</button><button className="rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50" disabled={isLoading} onClick={onConfirm} type="button">{isLoading ? 'Deleting...' : 'Delete'}</button></div></div></div>
+}
+
+export default ConfirmDialog

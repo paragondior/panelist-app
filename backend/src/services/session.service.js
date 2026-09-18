@@ -61,6 +61,18 @@ const getSessionSnapshot = async (sessionId, dbSession) => {
 
 const getSessionDetails = async (sessionId) => getSessionSnapshot(sessionId);
 
+const getPublicSessionDashboard = async (sessionId) => {
+  const snapshot = await getSessionSnapshot(sessionId);
+  const session = snapshot.session.toObject();
+
+  delete session.createdBy;
+
+  return {
+    session,
+    panelists: snapshot.panelists,
+  };
+};
+
 const withTransaction = async (callback) => {
   const dbSession = await mongoose.startSession();
 
@@ -275,6 +287,7 @@ module.exports = {
   endSpeaker,
   getSessionById,
   getSessionDetails,
+  getPublicSessionDashboard,
   listSessions,
   resetSession,
   selectCurrentSpeaker,

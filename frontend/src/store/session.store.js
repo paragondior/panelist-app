@@ -101,20 +101,22 @@ export const useSessionStore = create((set) => ({
 
   applySessionSnapshot: (snapshot) =>
     set((state) => {
+      const fallbackSession = state.currentSession || {}
       const session = snapshot.session || {
-        ...state.currentSession,
-        _id: snapshot.sessionId || state.currentSession?._id,
-        currentSpeaker: snapshot.currentSpeaker ?? null,
-        speakerStartedAt: snapshot.speakerStartedAt ?? null,
-        status: snapshot.sessionStatus || state.currentSession?.status,
-        updatedAt: snapshot.updatedAt || state.currentSession?.updatedAt,
+        ...fallbackSession,
+        _id: snapshot.sessionId || fallbackSession._id,
+        currentSpeaker: snapshot.currentSpeaker ?? fallbackSession.currentSpeaker ?? null,
+        speakerStartedAt: snapshot.speakerStartedAt ?? fallbackSession.speakerStartedAt ?? null,
+        status: snapshot.sessionStatus ?? fallbackSession.status,
+        updatedAt: snapshot.updatedAt ?? fallbackSession.updatedAt,
       }
 
       return {
         currentSession: session,
         currentSpeaker: snapshot.currentSpeaker ?? session.currentSpeaker ?? null,
         speakerStartedAt: snapshot.speakerStartedAt ?? session.speakerStartedAt ?? null,
-        panelists: snapshot.panelists || state.panelists,
+        panelists: Array.isArray(snapshot.panelists) ? snapshot.panelists : state.panelists,
+        error: null,
       }
     }),
   clearSession: () => set({ currentSession: null, currentSpeaker: null, speakerStartedAt: null, panelists: [] }),

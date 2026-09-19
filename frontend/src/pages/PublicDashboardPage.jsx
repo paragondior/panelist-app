@@ -38,20 +38,24 @@ function PublicDashboardPage() {
   const completed = data.panelists.filter((panelist) => panelist.status === 'completed')
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#07111d] text-white">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_75%_8%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_10%_80%,rgba(14,116,144,0.1),transparent_28%)]" />
-      <main className="relative mx-auto max-w-[1440px] px-5 py-7 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
+    <div className="min-h-screen overflow-x-hidden bg-[#020817] text-white">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_28%)]" />
+      <div className="pointer-events-none fixed inset-0 opacity-40 [background-image:linear-gradient(rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.08)_1px,transparent_1px)] [background-size:54px_54px]" />
+
+      <main className="relative mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 py-5 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
         {isLoading && !preview ? <DashboardSkeleton /> : error && !preview ? <DashboardErrorState message={error} onRetry={() => fetchSession(sessionId).catch(() => {})} /> : (
-          <>
+          <div className="flex min-h-[calc(100vh-2rem)] flex-col">
             <EventHeader preview={preview} session={data.session} />
-            <div className="mt-8 grid gap-10 lg:mt-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(19rem,0.7fr)] lg:items-start">
+
+            <div className="mt-5 flex-1">
               <CurrentSpeakerHero speaker={data.speaker} />
-              <div className="space-y-10 lg:pt-2">
-                <UpcomingSpeakersSection panelists={upcoming} />
-                <CompletedSpeakersSection panelists={completed} />
-              </div>
             </div>
-          </>
+
+            <div className="mt-5 space-y-4">
+              <UpcomingSpeakersSection panelists={upcoming} />
+              <CompletedSpeakersSection panelists={completed} />
+            </div>
+          </div>
         )}
       </main>
     </div>

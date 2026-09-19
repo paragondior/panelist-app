@@ -1,7 +1,39 @@
 import StatusIndicator from './StatusIndicator'
 
 function CurrentSpeakerCard({ speaker }) {
-  return <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div className="flex items-center justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-700">On stage</p><h2 className="mt-2 text-xl font-semibold text-slate-950">Current speaker</h2></div><StatusIndicator status={speaker?.status || 'upcoming'} /></div>{speaker ? <div className="mt-6 flex gap-4"><div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100 text-2xl font-bold text-slate-400">{speaker.profileImage ? <img className="h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} /> : speaker.fullName.slice(0, 1)}</div><div><h3 className="text-xl font-semibold text-slate-950">{speaker.fullName}</h3><p className="mt-1 text-sm text-slate-500">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p><p className="mt-3 text-sm text-slate-700">{speaker.topic || 'No topic provided'}</p></div></div> : <p className="mt-6 rounded-lg bg-slate-50 p-5 text-sm text-slate-500">No current speaker selected.</p>}</section>
+  return (
+    <section className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-700">On stage</p>
+          <h2 className="mt-2 text-xl font-semibold text-slate-950">Current speaker</h2>
+        </div>
+        <StatusIndicator status={speaker?.status || 'upcoming'} />
+      </div>
+
+      {speaker ? (
+        <div className="mt-6 flex gap-4">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-100 text-2xl font-bold text-slate-400">
+            {speaker.profileImage ? (
+              <img className="h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} />
+            ) : (
+              speaker.fullName.slice(0, 1)
+            )}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <h3 className="text-xl font-semibold text-slate-950">{speaker.fullName}</h3>
+            <p className="mt-1 text-sm text-slate-500">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-700">{speaker.topic || 'No topic provided'}</p>
+          </div>
+        </div>
+      ) : (
+        <p className="mt-6 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm text-slate-500">
+          No current speaker selected.
+        </p>
+      )}
+    </section>
+  )
 }
 
 export default CurrentSpeakerCard

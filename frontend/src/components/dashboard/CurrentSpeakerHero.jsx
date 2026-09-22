@@ -47,14 +47,14 @@ function CurrentSpeakerHero({ speaker }) {
   const speakerKey = speaker?._id || speaker?.fullName || 'no-speaker'
 
   return (
-    <section key={speakerKey} className="speaker-enter relative min-h-[58vh] overflow-hidden rounded-[2rem] border border-cyan-200/15 bg-gradient-to-br from-cyan-400/12 via-slate-900/90 to-slate-950 p-4 shadow-[0_35px_90px_rgba(2,6,23,0.8)] sm:p-6 lg:min-h-[64vh] lg:p-8">
+    <section key={speakerKey} className="speaker-enter relative min-h-[50vh] overflow-hidden rounded-[2rem] border border-cyan-200/15 bg-gradient-to-br from-cyan-400/12 via-slate-900/90 to-slate-950 p-3 shadow-[0_35px_90px_rgba(2,6,23,0.8)] sm:p-5 lg:min-h-[55vh] lg:p-6">
       <div className="speaker-spotlight pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
       <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-cyan-300/12 blur-3xl" />
       <div className="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
 
-      <div className="relative grid h-full gap-8 lg:grid-cols-[minmax(18rem,0.85fr)_1.15fr] lg:items-center lg:gap-10">
-        <div className="speaker-image-wrap relative aspect-[4/3] overflow-hidden rounded-[1.8rem] border border-white/10 bg-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.6)] lg:aspect-[4/5]">
+      <div className="relative grid h-full gap-6 lg:grid-cols-[minmax(16rem,0.82fr)_1.18fr] lg:items-center lg:gap-8">
+        <div className="speaker-image-wrap relative aspect-[4/3] max-h-[46vh] overflow-hidden rounded-[1.6rem] border border-white/10 bg-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.6)] lg:aspect-[4/5]">
           {speaker.profileImage ? (
             <img className="speaker-image h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} />
           ) : (
@@ -70,16 +70,16 @@ function CurrentSpeakerHero({ speaker }) {
             <SpeakerStatusBadge status="speaking" />
           </div>
 
-          <h2 className="mt-5 text-4xl font-semibold tracking-[-0.07em] text-white sm:text-5xl lg:text-6xl xl:text-[5rem]">{speaker.fullName}</h2>
-          <p className="mt-3 text-lg leading-7 text-slate-200 sm:text-xl">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.07em] text-white sm:text-4xl lg:text-5xl xl:text-[4.25rem]">{speaker.fullName}</h2>
+          <p className="mt-2 text-base leading-6 text-slate-200 sm:text-lg">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p>
 
           {(speaker.topic || speaker.bio) && (
-            <div className="bio-panel mt-8 max-w-xl rounded-[1.5rem] border border-white/10 bg-slate-900/45 p-5 shadow-[0_14px_35px_rgba(2,6,23,0.45)] backdrop-blur-sm">
+            <div className="bio-panel mt-6 max-w-xl rounded-[1.35rem] border border-white/10 bg-slate-900/45 p-4 shadow-[0_14px_35px_rgba(2,6,23,0.45)] backdrop-blur-sm">
               {speaker.topic && (
-                <p className="text-xl font-medium leading-relaxed text-white sm:text-2xl">“{speaker.topic}”</p>
+                <p className="text-lg font-medium leading-relaxed text-white sm:text-xl">“{speaker.topic}”</p>
               )}
               {speaker.bio && (
-                <p className="bio-copy mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+                <p className="bio-copy mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
                   {visibleBio}
                   <span className="typewriter-cursor" aria-hidden="true">|</span>
                 </p>

@@ -82,11 +82,16 @@ a:focus-visible {
 @keyframes speakerEnter {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.985);
+    transform: perspective(1200px) translateY(26px) scale(0.985) rotateX(1.2deg);
+    transform-origin: 50% 100%;
+  }
+  70% {
+    opacity: 0.96;
+    transform: perspective(1200px) translateY(-2px) scale(1.002) rotateX(0deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
   }
 }
 
@@ -126,7 +131,8 @@ a:focus-visible {
 }
 
 .speaker-enter {
-  animation: speakerEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: speakerEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-style: preserve-3d;
 }
 
 .speaker-spotlight {
@@ -134,7 +140,7 @@ a:focus-visible {
 }
 
 .speaker-image {
-  animation: imageReveal 0.7s ease-out both;
+  animation: imageReveal 0.9s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .speaker-content > * {

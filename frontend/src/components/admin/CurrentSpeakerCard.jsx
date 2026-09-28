@@ -2,7 +2,7 @@ import StatusIndicator from './StatusIndicator'
 
 function CurrentSpeakerCard({ speaker }) {
   return (
-    <section className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="rounded-[1.75rem] border border-slate-200 bg-green-400 p-6 shadow-sm">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-700">On stage</p>

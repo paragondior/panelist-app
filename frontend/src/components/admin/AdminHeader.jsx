@@ -17,7 +17,7 @@ function AdminHeader() {
           {user?.name || 'Administrator'}
         </div>
         <button
-          className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+          className="rounded-xl border border-slate-300 bg-blue-500 backdrop-blur-sm border-width/10 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
           onClick={logout}
           type="button"
         >

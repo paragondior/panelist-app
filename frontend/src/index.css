@@ -82,7 +82,7 @@ a:focus-visible {
 @keyframes speakerEnter {
   0% {
     opacity: 0;
-    transform: perspective(1200px) translateY(26px) scale(0.985) rotateX(1.2deg);
+    transform: perspective(1200px) translatex(28px) scale(0.985) rotateX(1.2deg);
     transform-origin: 50% 100%;
   }
   70% {
@@ -134,7 +134,20 @@ a:focus-visible {
   animation: speakerEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-style: preserve-3d;
 }
-
+.speaker-exit{
+  animation: speakerExit 0.45s cubic-beizer(0.55,0,0.78,0)both;
+  trsnsform-style: preserve-3d;
+}
+@keyframes speakerExit{
+  0%{
+opacity :1;
+transform: perspective(1200px) translatex(0) scale(1) rotateY(0deg);
+  }
+  100%{
+opacity: 0;
+transform: perspective(1200px) translatex(90) scale(0.97) rotateY(-5odeg);
+  }
+}
 .speaker-spotlight {
   animation: spotlightPulse 5s ease-in-out infinite;
 }

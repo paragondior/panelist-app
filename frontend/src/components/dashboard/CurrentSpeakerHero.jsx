@@ -50,43 +50,53 @@ function CurrentSpeakerHero({ speaker }) {
     <section key={speakerKey} className="speaker-enter relative min-h-[50vh] overflow-hidden rounded-[2rem] border border-cyan-200/15 bg-gradient-to-br from-cyan-400/12 via-slate-900/90 to-slate-950 p-3 shadow-[0_35px_90px_rgba(2,6,23,0.8)] sm:p-5 lg:min-h-[55vh] lg:p-6">
       <div className="speaker-spotlight pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
       <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-cyan-300/12 blur-3xl" />
-      <div className="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/10" />
+      <div className="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 lg:translate-x-[52px] rounded-full border border-cyan-200/10" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
 
       <div className="relative grid h-full gap-6 lg:grid-cols-[minmax(16rem,0.82fr)_1.18fr] lg:items-center lg:gap-8">
-        <div className="speaker-image-wrap relative aspect-[4/3] max-h-[46vh] overflow-hidden rounded-[1.6rem] border border-white/10 bg-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.6)] lg:aspect-[4/5]">
-          {speaker.profileImage ? (
-            <img className="speaker-image h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} />
-          ) : (
-            <div className="flex h-full items-end bg-gradient-to-br from-cyan-300/55 via-slate-800 to-slate-950 p-6">
-              <span className="text-7xl font-semibold tracking-[-0.08em] text-white/80">{speaker.fullName?.slice(0, 1)}</span>
-            </div>
-          )}
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
-        </div>
+        
 
         <div className="speaker-content relative flex h-full flex-col justify-center">
           <div className="flex items-center gap-3">
             <SpeakerStatusBadge status="speaking" />
           </div>
 
-          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.07em] text-white sm:text-4xl lg:text-5xl xl:text-[4.25rem]">{speaker.fullName}</h2>
-          <p className="mt-2 text-base leading-6 text-slate-200 sm:text-lg">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p>
+         
+          
+  {speaker.topic && (
+                <p className="mt-8 max-w-2xl text-4xl font-semibold leading-[1.05] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl xl:text-7xl">“{speaker.topic}”</p>
+              )}
 
-          {(speaker.topic || speaker.bio) && (
-            <div className="bio-panel mt-6 max-w-xl rounded-[1.35rem] border border-white/10 bg-slate-900/45 p-4 shadow-[0_14px_35px_rgba(2,6,23,0.45)] backdrop-blur-sm">
-              {speaker.topic && (
-                <p className="text-lg font-medium leading-relaxed text-white sm:text-xl">“{speaker.topic}”</p>
-              )}
-              {speaker.bio && (
-                <p className="bio-copy mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
-                  {visibleBio}
-                  <span className="typewriter-cursor" aria-hidden="true">|</span>
-                </p>
-              )}
+          
+            {speaker.bio && (
+  <p className="bio-copy mt-6 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
+    {visibleBio}
+    <span className="typewriter-cursor" aria-hidden="true">|</span>
+  </p>
+)}
             </div>
+         
+        <div className="flex flex-col items-center lg:translate-x-[52px]">
+          <div className="mb-3 flex justify-end lg:translate-x-40">
+  <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300 backdrop-blur-md">
+    {speaker.company}
+  </span>
+</div>
+        <div className="speaker-image-wrap relative   items-center  h-[400px] w-[400px]   overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.6)] ">
+          {speaker.profileImage ? (
+            <img className="speaker-image h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} />
+          ) : (
+            <div className="flex h-full items-end bg-gradient-to-br from-cyan-300/55 via-slate-800 to-slate-950 p-6">
+              <span className="text-7xl font-semibold tracking-[-0.08em] text-white/80">{speaker.fullName?.slice(0, 1)}</span>
+            </div>
+            
           )}
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
         </div>
+         <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">{speaker.fullName}</h2>
+         <p className="mt-2 text-sm font-medium leading-6 text-slate-400 sm:text-base">{[speaker.role, speaker.company].filter(Boolean).join(' · ')}</p>
+         </div>
+
       </div>
     </section>
   )

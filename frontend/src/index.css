@@ -208,3 +208,23 @@ transform: perspective(1200px) translatex(90) scale(0.97) rotateY(-5odeg);
     opacity: 0;
   }
 }
+@keyframes speakerRail {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.speaker-rail-track {
+  animation: speakerRail 28s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .speaker-rail-track {
+    animation: none;
+  }
+}

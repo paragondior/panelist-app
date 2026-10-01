@@ -52,7 +52,7 @@ speakerRef.current?.classList.add('speaker-exit')
   }
 }, [speaker?._id, displayedSpeaker?._id])
 
-  if (!speaker) {
+  if (!displayedSpeaker) {
     return (
       <section className="animate-fade-up relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-[0_30px_80px_rgba(2,6,23,0.75)] backdrop-blur-sm sm:p-10 lg:p-12">
         <div className="absolute -right-16 -top-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
@@ -70,7 +70,7 @@ speakerRef.current?.classList.add('speaker-exit')
    <section
    ref={speakerRef}
   key={speakerKey}
-  className={`${speakerPhase === 'enter' ? 'speaker-enter' : 'speaker-exit'} relative min-h-[50vh] overflow-hidden p-3 sm:p-5 lg:min-h-[65vh] lg:p-6`}
+  className={`${speakerPhase === 'enter' ? 'speaker-enter' : 'speaker-exit'} relative min-h-[50vh] overflow-hidden p-3 sm:p-5 lg:min-h-[48vh] lg:p-6`}
 >
       <div className="speaker-spotlight pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
       <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-cyan-300/12 blur-3xl" />
@@ -80,7 +80,7 @@ speakerRef.current?.classList.add('speaker-exit')
       <div className="relative grid h-full gap-6 lg:grid-cols-[minmax(16rem,0.82fr)_1.18fr] lg:items-center lg:gap-8">
         
 
-        <div className="speaker-content relative flex h-full flex-col justify-center">
+        <div className="speaker-content relative min-w-0 flex h-full flex-col justify-center">
           <div className="flex items-center gap-3">
             <SpeakerStatusBadge status="speaking" />
           </div>
@@ -93,7 +93,7 @@ speakerRef.current?.classList.add('speaker-exit')
 
           
             {displayedSpeaker.bio && (
-  <p className="bio-copy mt-6 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
+  <p className="bio-copy mt-6 max-w-2xl text-base break-words leading-7 text-slate-400 sm:text-lg">
     {visibleBio}
     <span className="typewriter-cursor" aria-hidden="true">|</span>
   </p>

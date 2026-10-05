@@ -1,6 +1,6 @@
 
 
-function PanelistCard({ panelist, completed = false }) {
+function PanelistCard({ panelist }) {
   return (
     <article className="group flex w-full flex-col items-center">
       <div className="h-34 w-34 shrink-0 overflow-hidden rounded-full border border-white/15 bg-slate-800  mb-4 shadow-md shadow-slate-950/40">
@@ -16,7 +16,7 @@ function PanelistCard({ panelist, completed = false }) {
       <div className="min-w-0 items-center">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="truncate text-base text-base font-semibold tracking-tight text-white">{panelist.fullName}</h3>
+            <h3 className="truncate  text-base font-semibold tracking-tight text-white">{panelist.fullName}</h3>
             <p className="mt-1 truncate text-xs text-slate-400">{[panelist.role, panelist.company].filter(Boolean).join(' · ')}</p>
           </div>
         

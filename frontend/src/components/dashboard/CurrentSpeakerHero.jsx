@@ -50,7 +50,7 @@ speakerRef.current?.classList.add('speaker-exit')
   return () => {
     window.clearTimeout(transitionTimer)
   }
-}, [speaker?._id, displayedSpeaker?._id])
+}, [speaker, displayedSpeaker?._id])
 
   if (!displayedSpeaker) {
     return (

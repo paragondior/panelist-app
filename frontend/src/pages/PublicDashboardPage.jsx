@@ -47,14 +47,19 @@ function PublicDashboardPage() {
           <div className="flex min-h-[calc(100vh-2rem)] flex-col">
             <EventHeader preview={preview} session={data.session} />
 
-            <div className="mt-5 flex-1">
-              <CurrentSpeakerHero speaker={data.speaker} />
-            </div>
+<div className="mt-5 flex-1">
+  <CurrentSpeakerHero speaker={data.speaker} />
+</div>
 
-            <div className="mt-5 space-y-4">
-              <UpcomingSpeakersSection panelists={upcoming} />
-              <CompletedSpeakersSection panelists={completed} />
-            </div>
+<div className="mt-5 space-y-4">
+  <div className="relative left-1/2 w-screen -translate-x-1/2 px-4 sm:px-6 lg:px-8">
+    <UpcomingSpeakersSection panelists={upcoming} />
+  </div>
+
+  <div className="relative left-1/2 w-screen -translate-x-1/2 px-4 sm:px-6 lg:px-8">
+    <CompletedSpeakersSection panelists={completed} />
+  </div>
+</div>
           </div>
         )}
       </main>

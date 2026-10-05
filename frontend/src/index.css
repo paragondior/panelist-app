@@ -134,9 +134,9 @@ a:focus-visible {
   animation: speakerEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-style: preserve-3d;
 }
-.speaker-exit{
-  animation: speakerExit 0.45s cubic-beizer(0.55,0,0.78,0)both;
-  trsnsform-style: preserve-3d;
+.speaker-exit {
+  animation: speakerExit 0.45s cubic-bezier(0.55, 0, 0.78, 0) both;
+  transform-style: preserve-3d;
 }
 @keyframes speakerExit{
   0%{
@@ -145,7 +145,7 @@ transform: perspective(1200px) translatex(0) scale(1) rotateY(0deg);
   }
   100%{
 opacity: 0;
-transform: perspective(1200px) translatex(90) scale(0.97) rotateY(-5odeg);
+transform: perspective(1200px) translatex(90) scale(0.97) rotateY(-5deg);
   }
 }
 .speaker-spotlight {
@@ -206,5 +206,45 @@ transform: perspective(1200px) translatex(90) scale(0.97) rotateY(-5odeg);
 @keyframes cursorBlink {
   50% {
     opacity: 0;
+  }
+}
+html,
+body,
+#root {
+  overflow-x: hidden;
+}
+
+.speaker-rail {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.speaker-rail-track {
+  position: absolute;
+  top: 8px;
+  left: 0;
+
+  display: flex;
+  width: max-content;
+  gap: 0;
+
+  transform: translateX(100vw);
+  animation: speakerRail 28s linear infinite;
+  will-change: transform;
+}
+
+@keyframes speakerRail {
+  from {
+    transform: translateX(100vw);
+  }
+
+  to {
+    transform: translateX(calc(-100% - 100vw));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .speaker-rail-track {
+    animation: none;
   }
 }

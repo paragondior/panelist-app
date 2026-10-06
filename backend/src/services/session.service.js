@@ -8,6 +8,7 @@ const sessionFields = [
   "eventName",
   "sessionName",
   "description",
+  "logo",
   "scheduledAt",
   "status",
 ];

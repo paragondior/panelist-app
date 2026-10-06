@@ -36,7 +36,7 @@ function PublicDashboardPage() {
 
   const upcoming = data.panelists.filter((panelist) => ['next', 'upcoming'].includes(panelist.status))
   const completed = data.panelists.filter((panelist) => panelist.status === 'completed')
-
+console.log("SESSION DATA:", data.session)
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#020817] text-white">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_28%)]" />
@@ -48,7 +48,7 @@ function PublicDashboardPage() {
             <EventHeader preview={preview} session={data.session} />
 
 <div className="mt-5 flex-1">
-  <CurrentSpeakerHero speaker={data.speaker} />
+<CurrentSpeakerHero speaker={data.speaker} session={data.session} />
 </div>
 
 <div className="mt-5 space-y-4">

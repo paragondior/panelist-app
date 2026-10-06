@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import SpeakerStatusBadge from './SpeakerStatusBadge'
 
-function CurrentSpeakerHero({ speaker }) {
+function CurrentSpeakerHero({ speaker, session }) {
   const [visibleBio, setVisibleBio] = useState('')
   const [displayedSpeaker, setDisplayedSpeaker] = useState(speaker)
   const [speakerPhase, setSpeakerPhase] = useState('enter')
@@ -101,7 +101,14 @@ speakerRef.current?.classList.add('speaker-exit')
             </div>
          
         <div className="flex flex-col items-center lg:translate-x-[52px]">
-          <div className="mb-3 flex justify-end lg:translate-x-40">
+        <div className="mb-3 flex items-center justify-end gap-3 lg:translate-x-40">
+ {session?.logo && (
+<img
+  src={session.logo}
+  alt="Company logo"
+  className="h-10 w-auto max-w-48 object-contain"
+/>
+)}
   <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300 backdrop-blur-md">
     {displayedSpeaker.company}
   </span>

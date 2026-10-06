@@ -16,6 +16,11 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    logo:{
+      type:String,
+      trim:true,
+      default:null
+    },
     scheduledAt: {
       type: Date,
       required: true,
@@ -43,6 +48,7 @@ const sessionSchema = new mongoose.Schema(
   {
     timestamps: true,
   },
+ 
 );
 
 sessionSchema.index({ status: 1, scheduledAt: 1 });

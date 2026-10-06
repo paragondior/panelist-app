@@ -93,7 +93,7 @@ speakerRef.current?.classList.add('speaker-exit')
 
           
             {displayedSpeaker.bio && (
-  <p className="bio-copy mt-6 max-w-2xl text-base break-words leading-7 text-slate-400 sm:text-lg">
+  <p className="bio-copy mt-6 max-w-2xl text-base break-words leading-7 text-slate-100 sm:text-lg">
     {visibleBio}
     <span className="typewriter-cursor" aria-hidden="true">|</span>
   </p>
@@ -103,17 +103,19 @@ speakerRef.current?.classList.add('speaker-exit')
         <div className="flex flex-col items-center lg:translate-x-[52px]">
         <div className="mb-3 flex items-center justify-end gap-3 lg:translate-x-40">
  {session?.logo && (
+  <div className= "rounded-xl bg-white p-2 shadow-lg">
 <img
   src={session.logo}
   alt="Company logo"
   className="h-10 w-auto max-w-48 object-contain"
 />
+</div>
 )}
-  <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300 backdrop-blur-md">
+  <span className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-100 backdrop-blur-md">
     {displayedSpeaker.company}
   </span>
 </div>
-        <div className="speaker-image-wrap relative   items-center  h-[400px] w-[400px]   overflow-hidden rounded-full border border-white/10 bg-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.6)] ">
+        <div className="speaker-image-wrap relative   items-center  h-[400px] w-[400px]   overflow-hidden rounded-full border border-white/10 bg-slate-400 shadow-[0_25px_60px_rgba(15,23,42,0.6)] ">
           {displayedSpeaker.profileImage ? (
             <img className="speaker-image h-full w-full object-cover" src={displayedSpeaker.profileImage} alt={displayedSpeaker.fullName} />
           ) : (
@@ -125,7 +127,7 @@ speakerRef.current?.classList.add('speaker-exit')
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
         </div>
          <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">{displayedSpeaker.fullName}</h2>
-         <p className="mt-2 text-sm font-medium leading-6 text-slate-400 sm:text-base">{[displayedSpeaker.role, displayedSpeaker.company].filter(Boolean).join(' · ')}</p>
+         <p className="mt-2 text-sm font-medium leading-6 text-slate-100 sm:text-base">{[displayedSpeaker.role, displayedSpeaker.company].filter(Boolean).join(' · ')}</p>
          </div>
 
       </div>

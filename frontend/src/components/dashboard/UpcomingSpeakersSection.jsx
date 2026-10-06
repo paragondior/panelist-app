@@ -7,13 +7,13 @@ function UpcomingSpeakersSection({ panelists }) {
     <section aria-labelledby="upcoming-heading" className="relative">
       <div className="mb-3 flex items-center justify-between gap-3">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cyan-300">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cyan-100">
             Next
           </p>
 
           <h2
             id="upcoming-heading"
-            className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-300"
+            className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-100"
           >
             Upcoming speakers
           </h2>
@@ -38,7 +38,7 @@ function UpcomingSpeakersSection({ panelists }) {
 </div>
         </div>
       ) : (
-        <div className="rounded-[1.2rem] border border-dashed border-white/10 bg-slate-900/30 p-4 text-sm text-slate-400">
+        <div className="rounded-[1.2rem] border border-dashed border-white/10 bg-slate-900/30 p-4 text-sm text-slate-100">
           No upcoming speakers have been scheduled yet.
         </div>
       )}

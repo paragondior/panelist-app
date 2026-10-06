@@ -17,7 +17,7 @@ function PanelistCard({ panelist }) {
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0">
             <h3 className="truncate  text-base font-semibold tracking-tight text-white">{panelist.fullName}</h3>
-            <p className="mt-1 truncate text-xs text-slate-400">{[panelist.role, panelist.company].filter(Boolean).join(' · ')}</p>
+            <p className="mt-1 truncate text-xs text-slate-100">{[panelist.role, panelist.company].filter(Boolean).join(' · ')}</p>
           </div>
         
         </div>

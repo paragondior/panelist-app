@@ -4,13 +4,13 @@ function CompletedSpeakersSection({ panelists }) {
   return (
     <section aria-labelledby="completed-heading" className="relative">
       <div className="mb-3">
-        <p className="pt-7 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+        <p className="pt-7 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-100">
           Conversation
         </p>
 
         <h2
           id="completed-heading"
-          className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-400"
+          className="mt-1 text-sm font-semibold uppercase tracking-[0.16em] text-slate-100"
         >
           Completed speakers
         </h2>

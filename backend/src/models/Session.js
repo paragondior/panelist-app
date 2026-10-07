@@ -30,6 +30,11 @@ const sessionSchema = new mongoose.Schema(
       enum: ["draft", "live", "completed"],
       default: "draft",
     },
+    displayMode: {
+      type: String,
+      enum: ["showcase", "panelist-wall"],
+      default: "showcase",
+    },
     currentSpeaker: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Panelist",

@@ -22,6 +22,7 @@ const emitSpeakerUpdated = (snapshot, changeType) => {
     currentSpeaker,
     speakerStartedAt: snapshot.session.speakerStartedAt,
     sessionStatus: snapshot.session.status,
+    displayMode: snapshot.session.displayMode || "showcase",
     panelists: snapshot.panelists,
     updatedAt: snapshot.session.updatedAt,
   };

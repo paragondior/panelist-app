@@ -4,7 +4,7 @@ const multer = require("multer");
 const express = require("express");
 const env = require("../config/env");
 const { authenticate, requireAdmin } = require("../middleware/auth.middleware");
-console.log("🔥 UPLOAD ROUTES LOADED");
+
 const uploadRouter = express.Router();
 const uploadDir = path.resolve(__dirname, "../../uploads");
 const cloudinary = require("../config/cloudinary")

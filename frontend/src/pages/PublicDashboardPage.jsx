@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import CompletedSpeakersSection from '../components/dashboard/CompletedSpeakersSection'
 import CurrentSpeakerHero from '../components/dashboard/CurrentSpeakerHero'
 import DashboardErrorState from '../components/dashboard/DashboardErrorState'
 import DashboardSkeleton from '../components/dashboard/DashboardSkeleton'
 import EventHeader from '../components/dashboard/EventHeader'
+import PanelistWall from '../components/dashboard/PanelistWall'
 import UpcomingSpeakersSection from '../components/dashboard/UpcomingSpeakersSection'
 import { useSocket } from '../hooks/useSocket'
 import { useSessionStore } from '../store/session.store'
@@ -17,11 +18,38 @@ const previewPanelists = [
   { _id: 'preview-completed', fullName: 'Elena Rossi', role: 'Founder', company: 'Studio Forma', status: 'completed' },
 ]
 
+const buildSpeakerIntroduction = (speaker) => {
+  const name = speaker.fullName?.trim()
+  const role = speaker.role?.trim()
+  const company = speaker.company?.trim()
+  const bio = speaker.bio?.trim()
+
+  if (!name) return ''
+
+  const professionalTitle = role && company
+    ? `${role} at ${company}`
+    : role || (company ? `from ${company}` : '')
+  const welcome = professionalTitle
+    ? `Please welcome ${name}, ${professionalTitle}.`
+    : `Please welcome ${name}.`
+
+  if (!bio) return welcome
+
+  const maxBioLength = 240
+  const shortBio = bio.length <= maxBioLength
+    ? bio
+    : `${bio.slice(0, maxBioLength).replace(/\s+\S*$/, '').trimEnd()}…`
+
+  return `${welcome} ${name} is ${shortBio}`
+}
+
 function PublicDashboardPage() {
   const [searchParams] = useSearchParams()
   const sessionId = searchParams.get('session') || import.meta.env.VITE_PUBLIC_SESSION_ID
-  const { currentSession, currentSpeaker, panelists, isLoading, error, fetchSession, applySessionSnapshot } = useSessionStore()
+  const { currentSession, currentSpeaker, panelists, speakerStartedAt, isLoading, error, fetchSession, applySessionSnapshot } = useSessionStore()
   const preview = !sessionId
+  const lastIntroductionKey = useRef(null)
+  const speakerForIntroduction = useRef(null)
 
   useEffect(() => {
     if (sessionId) fetchSession(sessionId).catch(() => {})
@@ -33,6 +61,53 @@ function PublicDashboardPage() {
     if (preview) return { session: previewSession, speaker: previewPanelists[0], panelists: previewPanelists }
     return { session: currentSession, speaker: currentSpeaker, panelists }
   }, [currentSession, currentSpeaker, panelists, preview])
+
+  const isActuallySpeaking = data.speaker?.status === 'speaking' && Boolean(speakerStartedAt)
+  const introductionKey = isActuallySpeaking
+    ? `${data.speaker._id}:${speakerStartedAt}`
+    : null
+
+  useEffect(() => {
+    speakerForIntroduction.current = data.speaker
+  }, [data.speaker])
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return undefined
+
+    if (!introductionKey) {
+      window.speechSynthesis.cancel()
+      return undefined
+    }
+
+    if (
+      lastIntroductionKey.current === introductionKey ||
+      typeof window.SpeechSynthesisUtterance !== 'function'
+    ) {
+      return undefined
+    }
+
+    window.speechSynthesis.cancel()
+    const startTimer = window.setTimeout(() => {
+      if (lastIntroductionKey.current === introductionKey) return
+
+      const introduction = buildSpeakerIntroduction(speakerForIntroduction.current || {})
+      if (!introduction) return
+
+      lastIntroductionKey.current = introductionKey
+      window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(introduction))
+    }, 0)
+
+    return () => window.clearTimeout(startTimer)
+  }, [introductionKey])
+
+  useEffect(
+    () => () => {
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel()
+      }
+    },
+    [],
+  )
 
   const upcoming = data.panelists.filter((panelist) => ['next', 'upcoming'].includes(panelist.status))
   const completed = data.panelists.filter((panelist) => panelist.status === 'completed')
@@ -198,6 +273,10 @@ console.log("SESSION DATA:", data.session)
         {isLoading && !preview ? <DashboardSkeleton /> : error && !preview ? <DashboardErrorState message={error} onRetry={() => fetchSession(sessionId).catch(() => {})} /> : (
           <div className="flex min-h-[calc(100vh-2rem)] flex-col">
             <EventHeader preview={preview} session={data.session} />
+            {data.session?.displayMode === 'panelist-wall' ? (
+              <PanelistWall speaker={data.speaker} panelists={data.panelists} />
+            ) : (
+              <>
 <div className="relative mt-5 flex-1">
 
   {/* Soft illumination behind the current speaker */}
@@ -230,6 +309,8 @@ console.log("SESSION DATA:", data.session)
     <CompletedSpeakersSection panelists={completed} />
   </div>
 </div>
+              </>
+  )}
           </div>
         )}
       </main>

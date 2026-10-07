@@ -11,6 +11,7 @@ const sessionFields = [
   "logo",
   "scheduledAt",
   "status",
+  "displayMode",
 ];
 
 const getSessionInput = (body) =>
@@ -141,6 +142,12 @@ const updateSession = async (sessionId, body) => {
       throw new ApiError(404, "Session not found");
     }
 
+    if (body.displayMode !== undefined) {
+      const snapshot = await getSessionSnapshot(session._id);
+      emitSpeakerUpdated(snapshot, "display-mode-updated");
+      return snapshot.session;
+    }
+
     return getSessionById(session._id);
   } catch (error) {
     handleDatabaseError(error);
@@ -185,7 +192,7 @@ const selectCurrentSpeaker = async (sessionId, panelistId) =>
     const panelist = await getPanelistForSession(sessionId, panelistId, dbSession);
 
     await Panelist.updateMany(
-      { session: sessionId, _id: { $ne: panelist._id }, status: "speaking" },
+      { session: sessionId, _id: { $ne: panelist._id }, status: { $in: ["speaking", "next"] } },
       { $set: { status: "upcoming" } },
       { session: dbSession },
     );

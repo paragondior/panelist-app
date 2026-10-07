@@ -108,6 +108,7 @@ export const useSessionStore = create((set) => ({
         currentSpeaker: snapshot.currentSpeaker ?? fallbackSession.currentSpeaker ?? null,
         speakerStartedAt: snapshot.speakerStartedAt ?? fallbackSession.speakerStartedAt ?? null,
         status: snapshot.sessionStatus ?? fallbackSession.status,
+        displayMode: snapshot.displayMode ?? fallbackSession.displayMode ?? 'showcase',
         updatedAt: snapshot.updatedAt ?? fallbackSession.updatedAt,
       }
 

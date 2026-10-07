@@ -82,7 +82,12 @@ speakerRef.current?.classList.add('speaker-exit')
 
         <div className="speaker-content relative min-w-0 flex h-full flex-col justify-center">
           <div className="flex items-center gap-3">
-            <SpeakerStatusBadge status="speaking" />
+            <SpeakerStatusBadge
+              status={
+                (speaker?._id === displayedSpeaker._id ? speaker.status : displayedSpeaker.status) ||
+                'speaking'
+              }
+            />
           </div>
 
          

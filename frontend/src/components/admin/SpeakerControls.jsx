@@ -1,4 +1,14 @@
-function SpeakerControls({ panelists, currentSpeaker, onSelect, onStart, onEnd, onReset, isLoading }) {
+function SpeakerControls({
+  panelists,
+  currentSpeaker,
+  onSelect,
+  onStart,
+  onEnd,
+  onReset,
+  isLoading,
+  voiceIntroductionEnabled,
+  onVoiceIntroductionChange,
+}) {
   const currentIndex = panelists.findIndex((panelist) => panelist._id === currentSpeaker?._id)
   const designatedPanelist =
     currentSpeaker?.status === 'next'
@@ -26,6 +36,37 @@ function SpeakerControls({ panelists, currentSpeaker, onSelect, onStart, onEnd, 
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <div className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 sm:col-span-2">
+          <div>
+            <p className="text-sm font-semibold text-slate-800">Voice Introduction</p>
+            <p className="mt-1 text-xs text-slate-500">
+              Automatically introduce speakers when they start.
+            </p>
+          </div>
+          <button
+            aria-checked={voiceIntroductionEnabled}
+            aria-label="Voice Introduction"
+            className={`relative inline-flex h-8 w-[4.25rem] shrink-0 items-center rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${
+              voiceIntroductionEnabled ? 'bg-emerald-600' : 'bg-slate-400'
+            }`}
+            onClick={() => onVoiceIntroductionChange(!voiceIntroductionEnabled)}
+            role="switch"
+            type="button"
+          >
+            <span
+              className={`absolute text-[10px] font-bold uppercase tracking-wide text-white ${
+                voiceIntroductionEnabled ? 'left-2' : 'right-2'
+              }`}
+            >
+              {voiceIntroductionEnabled ? 'ON' : 'OFF'}
+            </span>
+            <span
+              className={`h-6 w-6 rounded-full bg-white shadow transition-transform ${
+                voiceIntroductionEnabled ? 'translate-x-[2.25rem]' : 'translate-x-0'
+              }`}
+            />
+          </button>
+        </div>
         <label className="text-sm font-semibold text-slate-700 sm:col-span-2">
           Select next speaker
           <select

@@ -8,7 +8,10 @@ import EventHeader from '../components/dashboard/EventHeader'
 import PanelistWall from '../components/dashboard/PanelistWall'
 import UpcomingSpeakersSection from '../components/dashboard/UpcomingSpeakersSection'
 import { useSocket } from '../hooks/useSocket'
-import { useSessionStore } from '../store/session.store'
+import {
+  useSessionStore,
+  VOICE_INTRODUCTION_STORAGE_KEY,
+} from '../store/session.store'
 
 const previewSession = { eventName: 'Technology Leadership Summit', sessionName: 'AI in Enterprise Panel', status: 'live' }
 const previewPanelists = [
@@ -47,13 +50,28 @@ function PublicDashboardPage() {
   const [searchParams] = useSearchParams()
   const sessionId = searchParams.get('session') || import.meta.env.VITE_PUBLIC_SESSION_ID
   const { currentSession, currentSpeaker, panelists, speakerStartedAt, isLoading, error, fetchSession, applySessionSnapshot } = useSessionStore()
+  const voiceIntroductionEnabled = useSessionStore((state) => state.voiceIntroductionEnabled)
+  const syncVoiceIntroductionPreference = useSessionStore(
+    (state) => state.syncVoiceIntroductionPreference,
+  )
   const preview = !sessionId
   const lastIntroductionKey = useRef(null)
+  const lastObservedIntroductionKey = useRef(null)
   const speakerForIntroduction = useRef(null)
 
   useEffect(() => {
     if (sessionId) fetchSession(sessionId).catch(() => {})
   }, [fetchSession, sessionId])
+
+  useEffect(() => {
+    const handleStorage = (event) => {
+      if (event.key !== VOICE_INTRODUCTION_STORAGE_KEY && event.key !== null) return
+      syncVoiceIntroductionPreference(event.newValue !== 'off')
+    }
+
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [syncVoiceIntroductionPreference])
 
   useSocket({ sessionId, onSpeakerUpdated: applySessionSnapshot })
 
@@ -62,7 +80,13 @@ function PublicDashboardPage() {
     return { session: currentSession, speaker: currentSpeaker, panelists }
   }, [currentSession, currentSpeaker, panelists, preview])
 
-  const isActuallySpeaking = data.speaker?.status === 'speaking' && Boolean(speakerStartedAt)
+  const speakerPanelist = data.panelists.find(
+    (panelist) => String(panelist._id) === String(data.speaker?._id),
+  )
+  const isActuallySpeaking =
+    data.speaker?.status === 'speaking' &&
+    speakerPanelist?.status === 'speaking' &&
+    Boolean(speakerStartedAt)
   const introductionKey = isActuallySpeaking
     ? `${data.speaker._id}:${speakerStartedAt}`
     : null
@@ -76,29 +100,49 @@ function PublicDashboardPage() {
 
     if (!introductionKey) {
       window.speechSynthesis.cancel()
+      lastObservedIntroductionKey.current = null
       return undefined
     }
 
-    if (
-      lastIntroductionKey.current === introductionKey ||
-      typeof window.SpeechSynthesisUtterance !== 'function'
-    ) {
+    if (!voiceIntroductionEnabled) {
+      window.speechSynthesis.cancel()
+      lastObservedIntroductionKey.current = introductionKey
       return undefined
     }
+
+    if (lastObservedIntroductionKey.current === introductionKey) {
+      return undefined
+    }
+
+    if (lastIntroductionKey.current === introductionKey) {
+      lastObservedIntroductionKey.current = introductionKey
+      return undefined
+    }
+
+    if (typeof window.SpeechSynthesisUtterance !== 'function') return undefined
 
     window.speechSynthesis.cancel()
     const startTimer = window.setTimeout(() => {
-      if (lastIntroductionKey.current === introductionKey) return
+      if (
+        lastIntroductionKey.current === introductionKey ||
+        lastObservedIntroductionKey.current === introductionKey
+      ) {
+        return
+      }
 
       const introduction = buildSpeakerIntroduction(speakerForIntroduction.current || {})
       if (!introduction) return
 
       lastIntroductionKey.current = introductionKey
+      lastObservedIntroductionKey.current = introductionKey
       window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(introduction))
     }, 0)
 
-    return () => window.clearTimeout(startTimer)
-  }, [introductionKey])
+    return () => {
+      window.clearTimeout(startTimer)
+      window.speechSynthesis.cancel()
+    }
+  }, [introductionKey, voiceIntroductionEnabled])
 
   useEffect(
     () => () => {

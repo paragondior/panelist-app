@@ -11,14 +11,46 @@ import {
   updateSession,
 } from '../services/sessions.api'
 
+export const VOICE_INTRODUCTION_STORAGE_KEY = 'panelist-app-voice-introduction-enabled'
+
+const getInitialVoiceIntroductionPreference = () => {
+  if (typeof window === 'undefined') return true
+
+  try {
+    return window.localStorage.getItem(VOICE_INTRODUCTION_STORAGE_KEY) !== 'off'
+  } catch (error) {
+    console.warn('Unable to read voice introduction preference:', error)
+    return true
+  }
+}
+
 export const useSessionStore = create((set) => ({
   sessions: [],
   currentSession: null,
   currentSpeaker: null,
   panelists: [],
   speakerStartedAt: null,
+  voiceIntroductionEnabled: getInitialVoiceIntroductionPreference(),
   isLoading: false,
   error: null,
+
+  setVoiceIntroductionEnabled: (enabled) => {
+    const isEnabled = Boolean(enabled)
+
+    try {
+      window.localStorage.setItem(
+        VOICE_INTRODUCTION_STORAGE_KEY,
+        isEnabled ? 'on' : 'off',
+      )
+    } catch (error) {
+      console.warn('Unable to save voice introduction preference:', error)
+    }
+
+    set({ voiceIntroductionEnabled: isEnabled })
+  },
+
+  syncVoiceIntroductionPreference: (enabled) =>
+    set({ voiceIntroductionEnabled: Boolean(enabled) }),
 
   createSession: async (session) => {
     const createdSession = await createSession(session)

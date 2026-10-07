@@ -2,11 +2,11 @@ import StatusIndicator from './StatusIndicator'
 
 function SessionSelector({ sessions, value, onChange, onCreate }) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-end sm:p-5">
-      <label className="flex-1 text-sm font-semibold text-slate-700">
+    <div className="admin-glass-card admin-session-selector flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-end sm:p-5">
+      <label className="flex-1 text-sm font-semibold text-slate-100">
         Active session
         <select
-          className="mt-2 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal text-slate-900 outline-none transition focus:border-cyan-600 focus:ring-2 focus:ring-cyan-100"
+          className="admin-input mt-2 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal text-slate-900 outline-none transition focus:border-cyan-600 focus:ring-2 focus:ring-cyan-100"
           value={value || ''}
           onChange={(event) => onChange(event.target.value)}
         >
@@ -26,7 +26,7 @@ function SessionSelector({ sessions, value, onChange, onCreate }) {
       )}
 
       <button
-        className="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
+        className="admin-primary-button rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60"
         onClick={onCreate}
         type="button"
       >

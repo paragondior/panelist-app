@@ -22,7 +22,7 @@ function SpeakerControls({
   const selectedPanelistId = designatedPanelist?._id || ''
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="admin-glass-card admin-controls rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold text-slate-950">Speaker controls</h2>
@@ -36,7 +36,7 @@ function SpeakerControls({
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        <div className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 sm:col-span-2">
+        <div className="admin-voice-toggle flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 sm:col-span-2">
           <div>
             <p className="text-sm font-semibold text-slate-800">Voice Introduction</p>
             <p className="mt-1 text-xs text-slate-500">
@@ -46,7 +46,7 @@ function SpeakerControls({
           <button
             aria-checked={voiceIntroductionEnabled}
             aria-label="Voice Introduction"
-            className={`relative inline-flex h-8 w-[4.25rem] shrink-0 items-center rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${
+            className={`admin-voice-switch relative inline-flex h-8 w-[4.25rem] shrink-0 items-center rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 ${
               voiceIntroductionEnabled ? 'bg-emerald-600' : 'bg-slate-400'
             }`}
             onClick={() => onVoiceIntroductionChange(!voiceIntroductionEnabled)}
@@ -98,7 +98,7 @@ function SpeakerControls({
         </label>
 
         <button
-          className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-green-400 disabled:opacity-50"
+          className="admin-command-button rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-green-400 disabled:opacity-50"
           disabled={!automaticNextPanelist || isLoading}
           onClick={() => onStart(automaticNextPanelist?._id)}
           type="button"
@@ -106,7 +106,7 @@ function SpeakerControls({
           Start next speaker
         </button>
         <button
-          className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-red-400 disabled:opacity-50"
+          className="admin-command-button admin-command-button-danger rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-red-400 disabled:opacity-50"
           disabled={!currentSpeaker || isLoading}
           onClick={onEnd}
           type="button"
@@ -114,7 +114,7 @@ function SpeakerControls({
           End current speaker
         </button>
         <button
-          className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-red-400 disabled:opacity-50 sm:col-span-2"
+          className="admin-command-button admin-command-button-danger rounded-lg border border-rose-200 px-4 py-3 text-sm font-bold text-rose-700 hover:bg-red-400 disabled:opacity-50 sm:col-span-2"
           disabled={isLoading}
           onClick={onReset}
           type="button"

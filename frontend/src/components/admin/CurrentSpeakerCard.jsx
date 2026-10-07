@@ -2,7 +2,7 @@ import StatusIndicator from './StatusIndicator'
 
 function CurrentSpeakerCard({ speaker }) {
   return (
-    <section className="rounded-[1.75rem] border border-slate-200 bg-green-400 p-6 shadow-sm">
+    <section className="admin-glass-card admin-on-stage rounded-[1.75rem] border border-slate-200 bg-green-400 p-6 shadow-sm">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-700">On stage</p>
@@ -13,7 +13,7 @@ function CurrentSpeakerCard({ speaker }) {
 
       {speaker ? (
         <div className="mt-6 flex gap-4">
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-100 text-2xl font-bold text-slate-400">
+          <div className="admin-speaker-portrait flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-2xl font-bold text-slate-400 transition-transform duration-200 hover:scale-[1.03]">
             {speaker.profileImage ? (
               <img className="h-full w-full object-cover" src={speaker.profileImage} alt={speaker.fullName} />
             ) : (

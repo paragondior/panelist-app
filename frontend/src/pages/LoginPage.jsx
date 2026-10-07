@@ -22,7 +22,7 @@ function LoginPage() {
   }
 
   return (
-    <section className="mx-auto max-w-md px-6 py-16">
+    <section className="mx-auto flex justify-center max-w-md px-6 py-16">
       <h1 className="text-3xl font-semibold">Login</h1>
       <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
         <label className="block text-sm font-medium">
